@@ -23,3 +23,15 @@ after_success:
   - docker push razatg/multi-nginx
   - docker push razatg/multi-server
   - docker push razatg/multi-worker
+# Trigger aws bean stalk to start deployment
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-east-1'
+  app: 'multi-docker'
+  env: 'MultiDocker-env'
+  bucket_name: 'elasticbeanstalk-us-east-1-505370241196'
+  bucket_path: 'docker-multi'
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
